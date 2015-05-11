@@ -8,17 +8,17 @@ import java.net.Socket;
  */
 public class Client {
 
-    private Socket client;
+    private Socket clientSocket;
     private String username;
-    private MessageListener messageListener;
+    private MessageListenerThread messageListenerThread;
 
-    public Client(Socket client, String username)
+    public Client(Socket clientSocket, String username)
     {
-        this.client = client;
+        this.clientSocket = clientSocket;
         this.username = username;
 
-        messageListener = new MessageListener(client, this);
-        messageListener.start();
+        messageListenerThread = new MessageListenerThread(clientSocket, this);
+        messageListenerThread.start();
     }
 
     public String getUsername() {
@@ -26,7 +26,9 @@ public class Client {
     }
 
     public void setUsername(String username) {
+
         username = username.toLowerCase().trim();
+
         if(Utils.isUsernameValid(username));
         {
             this.username = username;
@@ -35,28 +37,28 @@ public class Client {
 
     public void stopClient()
     {
-        messageListener.stopClient();
+        messageListenerThread.stopClient();
     }
 
-    public MessageListener getMessageListener()
+    public MessageListenerThread getMessageListenerThread()
     {
-        return messageListener;
+        return messageListenerThread;
     }
 
-    public Socket getClient()
+    public Socket getClientSocket()
     {
-        return client;
+        return clientSocket;
     }
 
 }
 
-class MessageListener extends Thread
+class MessageListenerThread extends Thread
 {
     private Socket socket;
     private Client client;
     private boolean run;
 
-    public MessageListener(Socket socket, Client client)
+    public MessageListenerThread(Socket socket, Client client)
     {
         this.socket = socket;
         this.client = client;
@@ -80,40 +82,79 @@ class MessageListener extends Thread
             while(run) {
                 String message = Utils.readMessage(socket, client);
 
+                //if the message is not empty
                 if(!message.trim().equals("")) {
+
+                    //send message to a specific user
                     if (message.startsWith("$") && message.contains(":")) {
 
-                        String sendToUsername = message.substring(1, message.indexOf(":"));
-                        message = message.substring(message.indexOf(":") + 1, message.length());
+                        //get the user
+                        String sendToUsername = message.substring(
+                                1, message.indexOf(":")
+                        );
+                        //get the message
+                        message = message.substring(
+                                message.indexOf(":") + 1, message.length()
+                        );
 
+                        //find the user
                         for (Client serverClient : Server.getClients()) {
+
                             if (serverClient.getUsername().equals(sendToUsername)) {
-                                Utils.sendMessage(serverClient.getClient(), message);
-//                            serverClient.sendMessage(message);
+
+                                Utils.sendMessage(
+                                        serverClient.getClientSocket(), message
+                                );
                                 return;
                             }
                         }
+                        //didn't find the user
                         System.err.println("The user: '" + sendToUsername + "' doesn't exist");
-                    } else if (message.startsWith("#rename:")) {
+
+                    }
+                    //rename a user
+                    else if (message.startsWith("#rename:")) {
+
                         String oldUsername = client.getUsername();
-                        client.setUsername(message.substring(message.indexOf(":") + 1, message.length()));
+                        //set new username
+                        client.setUsername(
+                                message.substring(
+                                        message.indexOf(":") + 1, message.length()
+                                ));
                         System.out.println("Renamed '" + oldUsername + "' to: '" + client.getUsername() + "'");
-                    } else if (message.startsWith("#showall:")) {
+
+                    }
+                    //show all the users
+                    else if (message.startsWith("#showall:")) {
+
                         for(Client serverClient : Server.getClients())
                         {
-                            System.out.println("client: " + serverClient.getUsername());
+                            System.out.println("clientSocket: " + serverClient.getUsername());
                         }
-                    } else {
+                    }
+                    //send broadcast message
+                    else {
+
+                        //if it starts with #all: then remove it
                         if (message.startsWith("#all:")) {
-                            message = message.substring(5, message.length());
+
+                            message = message.substring(
+                                    message.indexOf(":") + 1, message.length()
+                            );
                         }
+
+                        //send the message to every user
                         for (Client serverClient : Server.getClients()) {
-                            //if it isn't the current user
+
+                            //if it isn't the current user (you don't want to send a message to yourself, don't you?)
                             if (!client.getUsername().equals(serverClient.getUsername())) {
-                                Utils.sendMessage(serverClient.getClient(), message);
-//                            serverClient.sendMessage(message);
+
+                                Utils.sendMessage(
+                                        serverClient.getClientSocket(), message
+                                );
                             }
                         }
+
                         System.out.println("Sent to everybody:" + message);
                     }
                 }

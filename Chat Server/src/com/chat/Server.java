@@ -29,42 +29,29 @@ public class Server {
         serverSocket = new ServerSocket(port);
 
         //Listen for clients. Block till one connects
-
         System.out.println("Waiting for clients...");
-        Socket client;// = serverSocket.accept();
+        Socket clientSocket;
 
         while(true)
         {
-            client = serverSocket.accept();
+            clientSocket = serverSocket.accept();
 
-            String username = Utils.readMessage(client, null).toLowerCase().trim();
+            //get the client username
+            String username = Utils.readMessage(clientSocket, null).toLowerCase().trim();
             System.out.println("Client connected: '" + username + "'");
-            boolean usernameValid = true;
 
-            for(Client serverClient : clients)
+            if(Utils.isUsernameValid(username))
             {
-                if(serverClient.getUsername().equals(username))
-                {
-                    usernameValid = false;
-                    break;
-                }
-            }
-
-            if(username.equals(""))
-            {
-                usernameValid = false;
-            }
-
-            if(usernameValid)
-            {
-                clients.add(new Client(client, username));
+                //accept the client
+                clients.add(new Client(clientSocket, username));
                 System.out.println("Client accepted: '" + username + "'");
-                Utils.sendMessage(client, "1");
+                Utils.sendMessage(clientSocket, "1");
             }
             else
             {
+                //send the client a cancel request
                 System.out.println("Client not accepted: '" + username + "'");
-                Utils.sendMessage(client, "0");
+                Utils.sendMessage(clientSocket, "0");
             }
         }
 
