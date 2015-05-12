@@ -96,6 +96,7 @@ class MessageListenerThread extends Thread
                         message = message.substring(
                                 message.indexOf(":") + 1, message.length()
                         );
+                        message = "$" + client.getUsername() + ": " + message;
 
                         //find the user
                         for (Client serverClient : Server.getClients()) {
@@ -125,7 +126,7 @@ class MessageListenerThread extends Thread
 
                     }
                     //show all the users
-                    else if (message.startsWith("#showall:")) {
+                    else if (message.equals("#showall")) {
 
                         for(Client serverClient : Server.getClients())
                         {
@@ -142,6 +143,8 @@ class MessageListenerThread extends Thread
                                     message.indexOf(":") + 1, message.length()
                             );
                         }
+
+                        message = client.getUsername() + ": " + message;
 
                         //send the message to every user
                         for (Client serverClient : Server.getClients()) {

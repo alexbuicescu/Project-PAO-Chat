@@ -22,12 +22,11 @@ public class Client {
         this.hostname = hostname;
         this.port = port;
         this.username = username;
-        try {
-            connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        new MessageListener().start();
+//        try {
+//            connect(username);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public Socket getClient()
@@ -35,13 +34,26 @@ public class Client {
         return client;
     }
 
-    public void connect() throws UnknownHostException, IOException{
+    public boolean connect(String username) throws UnknownHostException, IOException{
         System.out.println("Attempting to connect to "+hostname+":"+port);
         client = new Socket(hostname,port);
         client.setKeepAlive(true);
+
         System.out.println("Connection Established");
+
+        //send our username
         Utils.sendMessage(client, username);
 
+        //if the server refused the connection
+        if(Utils.readMessage(client, this).equals("0"))
+        {
+            client.close();
+            return false;
+        }
+
+        this.username = username;
+        new MessageListener().start();
+        return true;
     }
 
 //    public void readResponse() throws IOException{

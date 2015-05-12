@@ -29,11 +29,9 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/chat/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42009884" vertical-offset="0" max-vertical-offset="607">
-              <caret line="15" column="60" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.7561779" vertical-offset="51" max-vertical-offset="918">
+              <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,12 +39,12 @@
       <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/chat/Client.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="512" max-vertical-offset="1360">
-              <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1564">
+              <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#769#770#0" expanded="true" />
-                <element signature="e#798#799#0" expanded="true" />
+                <element signature="e#748#749#0" expanded="true" />
+                <element signature="e#777#778#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -416,12 +414,12 @@
       <created>1431356418682</created>
       <option name="number" value="Default" />
       <updated>1431356418682</updated>
-      <workItem from="1431356421379" duration="7164000" />
+      <workItem from="1431356421379" duration="8289000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7164000" />
+    <option name="totallyTimeSpent" value="8289000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -491,23 +489,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/chat/Client.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="512" max-vertical-offset="1360">
-          <caret line="42" column="14" selection-start-line="42" selection-start-column="14" selection-end-line="42" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="1564">
+          <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#769#770#0" expanded="true" />
-            <element signature="e#798#799#0" expanded="true" />
+            <element signature="e#748#749#0" expanded="true" />
+            <element signature="e#777#778#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/chat/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42009884" vertical-offset="0" max-vertical-offset="607">
-          <caret line="15" column="60" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.7561779" vertical-offset="51" max-vertical-offset="918">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
