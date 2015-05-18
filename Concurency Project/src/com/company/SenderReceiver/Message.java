@@ -1,5 +1,7 @@
 package com.company.SenderReceiver;
 
+import java.util.Random;
+
 /**
  * Created by Alexandru on 18-May-15.
  */
@@ -7,11 +9,13 @@ public class Message {
 
     private String message;
     private boolean ok;
-    private int receivers;
+    private int receiversNumbers;
+    private final Receiver[] receivers;
     private int seenBy;
 
-    public Message(int receivers)
+    public Message(int receiversNumbers, Receiver[] receivers)
     {
+        this.receiversNumbers = receiversNumbers;
         this.receivers = receivers;
         seenBy = 0;
         ok = false;
@@ -30,8 +34,14 @@ public class Message {
             }
         }
 
+        try {
+            Thread.sleep(new Random().nextInt(10) * 100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         seenBy++;
-        if(receivers == seenBy)
+        if(receiversNumbers == seenBy)
         {
             ok = false;
             try {
@@ -57,7 +67,15 @@ public class Message {
             }
         }
 
-        System.out.println("sending: " + message + ";" + seenBy);
+        System.out.println("sending: " + message);
+
+
+            for (int i = 0; i < receiversNumbers; i++) {
+                synchronized (receivers[i]) {
+//                receivers[i].setWait();
+                receivers[i].notifyAll();
+            }
+        }
 
         ok = true;
         seenBy = 0;

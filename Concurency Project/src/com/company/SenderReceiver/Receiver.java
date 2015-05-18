@@ -18,13 +18,13 @@ public class Receiver extends Thread {
     {
         while(true)
         {
-//            try {
-//
-//                wait();
-//
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+
+                wait();
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             System.out.println(name + ": " + message.getMessage());
         }
